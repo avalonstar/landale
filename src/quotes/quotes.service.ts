@@ -14,12 +14,20 @@ export class QuotesService {
     return this.quotesRepository.find()
   }
 
-  findOne(id: string): Promise<Quote> {
+  findOne(id: number): Promise<Quote> {
     return this.quotesRepository.findOne(id)
   }
 
-  async search(query: string) {
+  findRandom(): Promise<Quote> {
     return this.quotesRepository
+      .createQueryBuilder()
+      .orderBy('RANDOM()')
+      .limit(1)
+      .getOne()
+  }
+
+  async search(query: string) {
+    return await this.quotesRepository
       .createQueryBuilder()
       .select()
       .where('quote_tsvector @@ plainto_tsquery(:query)', { query })
