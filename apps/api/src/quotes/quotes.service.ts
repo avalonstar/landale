@@ -30,7 +30,7 @@ export class QuotesService {
     return await this.quotesRepository
       .createQueryBuilder()
       .select()
-      .where('quote_tsvector @@ plainto_tsquery(:query)', { query })
+      .where('tsvector @@ plainto_tsquery(:query)', { query })
       .orderBy('RANDOM()')
       .limit(1)
       .getOne()
