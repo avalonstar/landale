@@ -8,7 +8,7 @@ export class QuotesService {
   constructor(
     @InjectRepository(Quote)
     private quotesRepository: Repository<Quote>,
-  ) {}
+  ) { }
 
   findAll(): Promise<Quote[]> {
     return this.quotesRepository.find()
@@ -26,6 +26,10 @@ export class QuotesService {
       .getOne()
   }
 
+  count(): Promise<number> {
+    return this.quotesRepository.count()
+  }
+
   async search(query: string) {
     return await this.quotesRepository
       .createQueryBuilder()
@@ -36,12 +40,12 @@ export class QuotesService {
       .getOne()
   }
 
-  async insert(quote: Quote) {
-    await this.quotesRepository.insert(quote)
+  async insert(quote: Quote): Promise<Quote> {
+    try {
+      const data = this.quotesRepository.create(quote)
+      return await this.quotesRepository.save(data, { reload: true })
+    } catch (error) {
+      return error
+    }
   }
-
-  async remove(id: string): Promise<void> {
-    await this.quotesRepository.delete(id)
-  }
-
 }

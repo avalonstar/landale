@@ -18,7 +18,12 @@ export class QuotesResolver {
     return await this.quotesService.findRandom()
   }
 
-  @Mutation(() => Quote)
+  @Query(() => Int)
+  async count(): Promise<number> {
+    return await this.quotesService.count()
+  }
+
+  @Mutation()
   async addQuote(@Args('quote', { type: () => Quote }) quote: Quote) {
     return await this.quotesService.insert(quote)
   }
