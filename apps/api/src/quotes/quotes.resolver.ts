@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common'
-import { Args, Int, Query, Resolver } from '@nestjs/graphql'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { Quote } from './quotes.entity'
 import { QuotesService } from './quotes.service'
@@ -16,5 +16,10 @@ export class QuotesResolver {
     if (id) return await this.quotesService.findOne(id)
     if (term) return await this.quotesService.search(term)
     return await this.quotesService.findRandom()
+  }
+
+  @Mutation(() => Quote)
+  async addQuote(@Args('quote', { type: () => Quote }) quote: Quote) {
+    return await this.quotesService.insert(quote)
   }
 }

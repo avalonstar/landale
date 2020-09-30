@@ -36,7 +36,12 @@ export class QuotesService {
       .getOne()
   }
 
+  async insert(quote: Quote) {
+    await this.quotesRepository.insert(quote)
+  }
+
   async remove(id: string): Promise<void> {
     await this.quotesRepository.delete(id)
   }
+
 }
