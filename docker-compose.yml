@@ -9,3 +9,16 @@ services:
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: landale
+
+  api:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules    
+    depends_on: 
+      - database
+    environment:
+      DATABASE_HOST: database
+      DATABASE_NAME: landale      
+      DATABASE_USER: landale
+      DATABASE_PASSWORD: password
