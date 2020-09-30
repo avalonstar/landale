@@ -26,7 +26,7 @@ providers:
     endpoint: "unix:///var/run/docker.sock"
     network: "traefik-network"
     exposedByDefault: false
-    defaultRule: "Host(`{{ index .Labels \"com.docker.compose.service\"}}.<domain>.com`)"
+    defaultRule: "Host(`{{ index .Labels \"com.docker.compose.service\"}}.landale.app`)"
   file:
     filename: "/etc/traefik/dynamic_config.yml"
     watch: true
