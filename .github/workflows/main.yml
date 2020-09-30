@@ -23,5 +23,7 @@ jobs:
         uses: actions/setup-node@v1.4.3
         with:
           node-version: '12'
+      - name: Setup shared network
+        run: docker network create traefik-network
       - name: Build the stack
         run: docker-compose up -d
