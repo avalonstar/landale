@@ -18,9 +18,13 @@ providers:
     filename: "/etc/traefik/dynamic_config.yml"
     watch: true
 certificatesResolvers:
-  le:
+  cloudflare:
     acme:
       email: bryan@avalonstar.com
-      storage: /acme.json
-      httpChallenge:
-        entryPoint: insecure
+      storage: acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"
+  
