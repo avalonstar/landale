@@ -8,7 +8,7 @@ export class QuotesService {
   constructor(
     @InjectRepository(Quote)
     private quotesRepository: Repository<Quote>,
-  ) { }
+  ) {}
 
   findAll(): Promise<Quote[]> {
     return this.quotesRepository.find()
@@ -40,7 +40,7 @@ export class QuotesService {
       .getOne()
   }
 
-  async insert(quote: Quote): Promise<Quote> {
+  async insert(quote: Partial<Quote>): Promise<Quote> {
     try {
       const data = this.quotesRepository.create(quote)
       return await this.quotesRepository.save(data, { reload: true })

@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { Quote } from './quotes.entity'
+import { CreateQuoteDTO } from './dto/create-quote.input'
 import { QuotesService } from './quotes.service'
 
 @Resolver(() => Quote)
@@ -23,8 +24,10 @@ export class QuotesResolver {
     return await this.quotesService.count()
   }
 
-  @Mutation()
-  async addQuote(@Args('quote', { type: () => Quote }) quote: Quote) {
+  @Mutation(() => Quote)
+  async addQuote(
+    @Args('quote', { type: () => CreateQuoteDTO }) quote: CreateQuoteDTO,
+  ): Promise<Quote> {
     return await this.quotesService.insert(quote)
   }
 }
