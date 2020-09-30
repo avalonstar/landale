@@ -1,0 +1,27 @@
+name: Build
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create .env file
+        run: |
+          touch .production.env
+          echo POSTGRES_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .production.env
+          echo POSTGRES_USER=${{ secrets.DATABASE_USER }} >> .production.env
+          echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .production.env
+          echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> .production.env
+          echo DATABASE_USER=${{ secrets.DATABASE_USER }} >> .production.env
+          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .production.env
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: '12'
+      - name: Build the stack
+        run: docker-compose up -d
