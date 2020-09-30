@@ -19,8 +19,10 @@ services:
       - database
     ports:
       - 3000:3000
-    labels:
+    labels: 
       - "traefik.enable=true"
+      - "traefik.http.routers.api.entrypoints=secure"
+      - "traefik.http.routers.api.tls.certresolver=cloudflare"      
 
   traefik:
     image: traefik:latest
@@ -37,8 +39,15 @@ services:
       - 8080:8080
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
+      - "traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)"
+      - "traefik.http.routers.http_catchall.entrypoints=insecure"
+      - "traefik.http.routers.http_catchall.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.traefik.entrypoints=secure"
       - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
+      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
 
 volumes: 
   server_db:
