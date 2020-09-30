@@ -19,8 +19,13 @@ export class QuotesResolver {
     return await this.quotesService.findRandom()
   }
 
+  @Query(() => Quote)
+  async latestQuote(): Promise<Quote> {
+    return await this.quotesService.latest()
+  }
+
   @Query(() => Int)
-  async count(): Promise<number> {
+  async quoteCount(): Promise<number> {
     return await this.quotesService.count()
   }
 

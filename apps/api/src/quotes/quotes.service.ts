@@ -30,6 +30,14 @@ export class QuotesService {
     return this.quotesRepository.count()
   }
 
+  async latest() {
+    return await this.quotesRepository
+      .createQueryBuilder()
+      .orderBy('id', 'DESC')
+      .limit(1)
+      .getOne()
+  }
+
   async search(query: string) {
     return await this.quotesRepository
       .createQueryBuilder()
