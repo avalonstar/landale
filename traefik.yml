@@ -1,0 +1,25 @@
+log:
+  level: DEBUG
+  filepath: "/etc/traefik/log/traefik.log"
+api:
+  dashboard: true
+entryPoints:
+  insecure:
+    address: ":80"
+  secure:
+    address: ":443"
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    network: "traefik-network"
+    exposedByDefault: false
+  file:
+    filename: "/etc/traefik/dynamic_config.yml"
+    watch: true
+certificatesResolvers:
+  le:
+    acme:
+      email: bryan@avalonstar.com
+      storage: /acme.json
+      httpChallenge:
+        entryPoint: insecure
