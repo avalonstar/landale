@@ -2,6 +2,7 @@ log:
   level: DEBUG
   filepath: "/etc/traefik/log/traefik.log"
 api:
+  insecure: true
   dashboard: true
 entryPoints:
   insecure:
