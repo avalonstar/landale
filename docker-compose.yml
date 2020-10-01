@@ -24,6 +24,10 @@ services:
       - "traefik.http.routers.api.entrypoints=secure"
       - "traefik.http.routers.api.tls.certresolver=cloudflare"      
 
+  bot:
+    image: bryanveloso/elsydeon:latest
+    restart: always
+
   traefik:
     image: traefik:latest
     restart: always
