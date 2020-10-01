@@ -27,6 +27,8 @@ services:
   bot:
     image: bryanveloso/elsydeon:latest
     restart: always
+    env_file: 
+      - .production.env
 
   traefik:
     image: traefik:latest
