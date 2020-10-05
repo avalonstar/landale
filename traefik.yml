@@ -1,6 +1,5 @@
 api:
   debug: true
-  insecure: true
   dashboard: true
 
 entryPoints:
@@ -46,7 +45,7 @@ certificatesResolvers:
       email: bryan@avalonstar.com
       storage: acme.json
       httpChallenge:
-        entryPoint: http
+        entryPoint: insecure
 
 log:
   level: DEBUG
